@@ -42,7 +42,7 @@ struct UdpSocketAddr {
 
     void setAddr(const std::string& addr_a) {
         std::array<uint8_t, 4> addr;
-        int rtv = sscanf(addr_a.c_str(), "%hu.%hu.%hu.%hu", &addr[0], &addr[1], &addr[2], &addr[3]);
+        int rtv = sscanf(addr_a.c_str(), "%hhu.%hhu.%hhu.%hhu", &addr[0], &addr[1], &addr[2], &addr[3]);
         if (rtv != 4) throw std::invalid_argument(addr_a);
         setAddr(addr); 
     }
