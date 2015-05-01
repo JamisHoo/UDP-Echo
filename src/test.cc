@@ -16,6 +16,7 @@ int main(int argc, char** argv) {
         }
         
         string message = "hello";
+        addr.setAddr("192.168.1.101");
 
         addr.setPort(8888);
         
