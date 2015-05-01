@@ -63,7 +63,7 @@ int udp_recv(const socket_t sockfd, std::string& str, UdpSocketAddr& dest_addr) 
     std::cout << "socklen == " << socklen << std::endl;
     std::cout << ntohs(dest_addr.get()->sin_port) << std::endl;
     */
-
+    buffer[return_value] = 0;
     buffer[buffer_size - 1] = 0;
     str.assign(buffer);
 

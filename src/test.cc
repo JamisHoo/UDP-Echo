@@ -17,11 +17,11 @@ int main(int argc, char** argv) {
         
         string message = "hello";
 
-        memset(&addr, 0x00, sizeof(addr));
         addr.setPort(8888);
         
         udp_send(sockfd, message, addr);
         
+        memset(&addr, 0x00, sizeof(addr));
 
 
         udp_recv(sockfd, message, addr);
