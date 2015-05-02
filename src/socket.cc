@@ -10,14 +10,22 @@
  *  E-mail: hjm211324@gmail.com
  *  Date: May  1, 2015
  *  Time: 14:11:30
- *  Description: package of C-style functions
+ *  Description: package of C-style socket functions and system functions
  *****************************************************************************/
 #include "socket.h"
+#include <sys/time.h>
 
 
 const std::array<uint8_t, 4> UdpSocketAddr::ADDR_ANY({ 0, 0, 0, 0 });
 
-std::ostream& operator<<(std::ostream& out, UdpSocketAddr& addr) {
+std::array<uint8_t, 4> text2ip(const std::string& addr_text) {
+    std::array<uint8_t, 4> addr_ip;
+    int rtv = sscanf(addr_text.c_str(), "%hhu.%hhu.%hhu.%hhu", &addr_ip[0], &addr_ip[1], &addr_ip[2], &addr_ip[3]);
+    if (rtv != 4) throw std::invalid_argument(addr_text);
+    return addr_ip;
+}
+
+std::ostream& operator<<(std::ostream& out, const UdpSocketAddr& addr) {
     uint8_t* v4_addr = (uint8_t*)(&addr.v4_addr.sin_addr.s_addr);
     out << unsigned(v4_addr[0]) << '.' 
         << unsigned(v4_addr[1]) << '.'
@@ -41,36 +49,42 @@ int udp_send(const socket_t sockfd, const std::string& message, const UdpSocketA
 }
 
 int udp_recv(const socket_t sockfd, std::string& str, UdpSocketAddr& dest_addr) {
-    constexpr size_t buffer_size = 1 << 12;
+    constexpr size_t buffer_size = 1 << 16;
     char buffer[buffer_size];
 
     socklen_t socklen = dest_addr.length();
 
-    /*
-    for (int i = 0; i < sizeof(dest_addr); ++i)
-        std::cout << (unsigned(((char*)(&dest_addr))[i]) & 0xff) << ' ';
-    std::cout << std::endl;
-    std::cout << "socklen == " << socklen << std::endl;
-    std::cout << ntohs(dest_addr.get()->sin_port) << std::endl;
-    */
 
     int return_value = ::recvfrom(sockfd, buffer, buffer_size - 1, 0, (sockaddr*)dest_addr.get(), &socklen);
 
-    /*
-    for (int i = 0; i < sizeof(dest_addr); ++i)
-        std::cout << (unsigned((((char*)(&dest_addr))[i])) & 0xff) << ' ';
-    std::cout << std::endl;
-    std::cout << "socklen == " << socklen << std::endl;
-    std::cout << ntohs(dest_addr.get()->sin_port) << std::endl;
-    */
-    buffer[return_value] = 0;
+    if (return_value == -1 && (errno == EAGAIN || errno == EWOULDBLOCK))
+        return -2;
+
+    if (return_value != -1)
+        buffer[return_value] = 0;
     buffer[buffer_size - 1] = 0;
     str.assign(buffer);
 
     return return_value;
 }
 
-int udp_close(socket_t sockfd) {
+int setTimeoutOnReceive(const socket_t sockfd, const size_t timeout) {
+    timeval tv;
+    tv.tv_sec = timeout;
+    // wait for extra 500 us
+    tv.tv_usec = 500;
+    return setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char*)&tv, sizeof(timeval));
+}
+
+int udp_close(const socket_t sockfd) {
     return ::close(sockfd);
 }
+
+
+uint64_t gettime() {
+    timeval time;
+    gettimeofday(&time, 0);
+    return time.tv_sec * 1000000 + time.tv_usec;
+}
+
 

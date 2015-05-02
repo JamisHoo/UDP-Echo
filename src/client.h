@@ -19,7 +19,7 @@
 
 class Client {
 public:
-    Client(const uint16_t port): _port(port) {
+    Client(const uint16_t port): _port(port), _sockfd(0) {
         _sockfd = udp_socket();     
         if (_sockfd == -1) 
             throw std::runtime_error(std::string("Create socket failed. "));
@@ -42,20 +42,21 @@ public:
         while (true) {
             if (udp_recv(_sockfd, message, _server_addr) == -1)
                 throw std::runtime_error(std::string("Error when receiving message. "));
-            std::cout << "Receive from " << _server_addr << " \"" << message << "\"\n" << std::flush;
+            std::cout << "Receive from " << _server_addr << " \"" << message.length() << "\"\n" << std::flush;
             echo(message);
         }
-    }
-
-    void echo(const std::string& message) {
-        if (udp_send(_sockfd, message, _server_addr) == -1)
-            throw std::runtime_error(std::string("Error when sending echo. "));
     }
 
 private:
     uint16_t _port;
     socket_t _sockfd;
     UdpSocketAddr _server_addr;
+
+    void echo(const std::string& message) {
+        if (udp_send(_sockfd, message, _server_addr) == -1)
+            throw std::runtime_error(std::string("Error when sending echo. "));
+    }
+
 };
 
 #endif /* CLIENT_H_ */

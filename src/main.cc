@@ -15,6 +15,7 @@
 #include <iostream>
 #include "parser.h"
 #include "client.h"
+#include "server.h"
 
 
 int main(int argc, char** argv) {
@@ -26,8 +27,22 @@ int main(int argc, char** argv) {
     
     if (parser.isServer()) {
         cout << "Is server" << "\n";
-        cout << parser.port() << "\n";
-        cout << parser.configfile() << "\n";
+
+        try {
+            Server server(parser.clientAddrs());
+            std::cout << "sendcount == " << parser.packetCount() << std::endl;
+            std::cout << "timeout == " << parser.timeout() << std::endl;
+            std::cout << "packetsize == " << parser.packetSize() << std::endl;
+            std::cout << "port == " << parser.port() << std::endl;
+            server.setSendCount(parser.packetCount());
+            server.setTimeout(parser.timeout());
+            server.setPacketSize(parser.packetSize());
+            server.setPort(parser.port());
+            server.measure();
+        } catch (std::exception& error) {
+            std::cerr << error.what() << std::endl;
+        }
+
     } else if (parser.isClient()) {
         cout << "Is client ";
         cout << parser.port() << "\n";
@@ -36,7 +51,7 @@ int main(int argc, char** argv) {
             Client client(parser.port());
             client.listen();
         } catch (std::exception& error) {
-            std::cout << error.what() << std::endl;
+            std::cerr << error.what() << std::endl;
         }
     }
 
