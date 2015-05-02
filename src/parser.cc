@@ -22,7 +22,7 @@ void OptionParser::initialize() {
     namespace po = boost::program_options;
     po::options_description server_options("Server options");
     server_options.add_options()
-        ("inputfile,i", po::value<string>(), "Path of file fo all clients. This options is mandatory for server. ")
+        ("inputfile,i", po::value<string>(), "Path of file for all clients. This options is mandatory for server. ")
         ("count,c", po::value<int32_t>(), "Stop after sending count packets. The default value is 5. ")
         ("timeout,t", po::value<int32_t>(), "Specify a timeout, in seconds. The default value is 3. "
                                             "If this is set to zero, it will never timeout. ")
