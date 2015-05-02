@@ -70,7 +70,7 @@ User can specify a UDP payload length and server will generate a random string t
 
     Display version number. This option is incompatible with any other option.
     
-* -p [ --port ] **port**
+* -p [ --port ] *port*
 
     Speciy listen/send port for client/server. This option is mandatory for client. If you don't specify a port for a server, system will automatically allocate a free port. This option is compatible with server options or client options.
     
