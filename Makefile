@@ -49,11 +49,9 @@ check: all
 .PHONY: clean
 clean:
 	$(RM) $(OBJECTS)
-	@if [ -d $(BUILDDIR) ]; then rmdir --ignore-fail-on-non-empty $(BUILDDIR); fi
-	@echo $(RM) $(BUILDDIR)
+	$(RM) -r $(BUILDDIR)
 
 .PHONY: cleanall
 cleanall: clean
 	$(RM) $(TARGET)
-	@if [ -d $(BINDIR) ]; then rmdir --ignore-fail-on-non-empty $(BINDIR); fi
-	@echo $(RM) $(BINDIR)
+	$(RM) -r $(BINDIR)
