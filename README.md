@@ -6,6 +6,8 @@ UDP-Echo operates by sending User Datagram Protocol (UDP) echo request packets t
 
 UDP-Echo may be executed with various command-line switches to enable special operational modes. For example, options include specifying the packet size of the probe, automatic repeated operation for sending a specified count of probes, and setting receiving timeouts.
 
+This utility only supports Linux and OS X.
+
 ##Message format
 
 <table class="wikitable" style="float: right; margin-left: 1.5em; margin-right: 0; margin-top: 0; text-align: center;">
