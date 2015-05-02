@@ -21,7 +21,9 @@
 #include <netinet/in.h>
 #include <array>
 #include <stdexcept>
-#include <iostream>
+
+// udp header size(8) + IP header size(20)
+constexpr int PACKET_HEADER_SIZE = 28;
 
 // convert ipv4 address from numbers-and-dots notation to array
 std::array<uint8_t, 4> text2ip(const std::string& addr_text);

@@ -14,6 +14,7 @@
  *****************************************************************************/
 #include "socket.h"
 #include <sys/time.h>
+#include <iostream>
 
 
 const std::array<uint8_t, 4> UdpSocketAddr::ADDR_ANY({ 0, 0, 0, 0 });

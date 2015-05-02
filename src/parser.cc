@@ -3,7 +3,7 @@
  *  Distributed under the MIT license 
  *  (See accompanying file LICENSE or copy at http://opensource.org/licenses/MIT)
  *  
- *  Project: 
+ *  Project: UDP-Echo
  *  Filename: parser.cc 
  *  Version: 1.0
  *  Author: Jamis Hoo
@@ -72,7 +72,6 @@ void OptionParser::parse(int argc, char** argv) {
             return;
         }
 
-        std::cout << "vmsize == " << vm.size() << std::endl;
         // client
         if (vm.size() == 2 && vm.count("listen") && vm.count("port")) {
             _is_client = 1;
@@ -99,7 +98,7 @@ void OptionParser::parse(int argc, char** argv) {
             if (vm.count("packetsize")) 
                 _packet_size = vm["packetsize"].as<int32_t>();
             else 
-                _packet_size = 28;
+                _packet_size = PACKET_HEADER_SIZE;
             loadClientAddrs();
             return;
         }
@@ -110,7 +109,7 @@ void OptionParser::parse(int argc, char** argv) {
             cout << "Invalid option(s)." << "\n\n";
         cout << all_options << "\n";
     } catch (exception& e) {
-        cout << e.what() << "\n";
+        cerr << e.what() << "\n";
     }
 }
 

@@ -3,19 +3,20 @@
  *  Distributed under the MIT license 
  *  (See accompanying file LICENSE or copy at http://opensource.org/licenses/MIT)
  *  
- *  Project: 
+ *  Project: UDP-Echo
  *  Filename: client.h 
  *  Version: 1.0
  *  Author: Jamis Hoo
  *  E-mail: hjm211324@gmail.com
  *  Date: May  1, 2015
  *  Time: 21:41:15
- *  Description: 
+ *  Description: client
  *****************************************************************************/
 #ifndef CLIENT_H_
 #define CLIENT_H_
 
 #include "socket.h"
+
 
 class Client {
 public:
@@ -42,7 +43,7 @@ public:
         while (true) {
             if (udp_recv(_sockfd, message, _server_addr) == -1)
                 throw std::runtime_error(std::string("Error when receiving message. "));
-            std::cout << "Receive from " << _server_addr << " \"" << message.length() << "\"\n" << std::flush;
+            std::cout << "Client received " << message.length() + PACKET_HEADER_SIZE << " bytes message from " << _server_addr << std::endl;
             echo(message);
         }
     }
