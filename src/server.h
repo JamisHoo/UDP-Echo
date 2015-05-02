@@ -18,6 +18,7 @@
 #include <unordered_map>
 #include <vector>
 #include <limits>
+#include <string>
 #include "socket.h"
 
 class Server {
