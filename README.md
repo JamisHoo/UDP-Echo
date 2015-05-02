@@ -1,6 +1,6 @@
 # UDP-Echo
 
-UDP-Echo is a network utility used to test the reachability of some hosts on a User Datagram Protocol (UDP) network and to measure the round-trip time for messages sent from the originating host(server) to destination hosts(clients).
+UDP-Echo is a network utility used to test the reachability of some hosts on a User Datagram Protocol (UDP) network and to measure the round-trip time for messages sent from the originating host (server) to destination hosts (clients).
 
 UDP-Echo operates by sending User Datagram Protocol (UDP) echo request packets to the target hosts and waiting for UDP responses. In the process it measures the time from transmission to reception (round-trip time) and records any packet loss. The results of the test are printed in the form of a statistical summary of the response packets received, including the minimum, maximum, and the mean round-trip times.
 
