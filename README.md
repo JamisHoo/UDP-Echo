@@ -76,7 +76,7 @@ User can specify a UDP payload length and server will generate a random string t
     
 ###Server options
 
-All server options is incompatible with client client options.
+All server options is incompatible with client options.
 
 * -i [ --inputfile ] *filename*
 
