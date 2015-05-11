@@ -20,7 +20,7 @@ This utility only supports Linux and OS X.
 <th scope="col" style="width:110px;">Bits 24–31</th>
 </tr>
 <tr style="background:#e0e0ff;">
-<th rowspan="5"><a href="/wiki/IPv4_Header" title="IPv4 Header" class="mw-redirect">IP Header</a><br />
+<th rowspan="5">IP Header<br />
 (20 bytes)</th>
 <td>Version/IHL</td>
 <td>Type of service</td>
